@@ -1,11 +1,12 @@
 package br.com.bho.formalizacaodigital.dto;
 
+import br.com.bho.formalizacaodigital.domain.Cliente;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -17,23 +18,33 @@ import java.math.BigDecimal;
 public class ClienteDTO implements Serializable {
 
     @NotNull
-    private Long id;
+    private Long idCliente;
 
-    @NotBlank
+    @NotNull
     private String nome;
 
-    @NotBlank
+    @NotNull
     private String cpfCnpj;
 
-    @NotNull
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Character sexo;
 
-    @NotNull
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer idade;
 
-    @NotBlank
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String profissao;
 
-    @NotNull
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private BigDecimal salario;
+
+    public ClienteDTO(Cliente cliente) {
+        this.idCliente = cliente.getId();
+        this.nome = cliente.getNome();
+        this.cpfCnpj = cliente.getCpfCnpj();
+        this.sexo = cliente.getSexo();
+        this.idade = cliente.getIdade();
+        this.profissao = cliente.getProfissao();
+        this.salario = cliente.getSalario();
+    }
 }

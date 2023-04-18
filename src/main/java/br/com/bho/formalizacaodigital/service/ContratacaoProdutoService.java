@@ -1,12 +1,14 @@
 package br.com.bho.formalizacaodigital.service;
 
-import br.com.bho.formalizacaodigital.domain.Cliente;
-import br.com.bho.formalizacaodigital.domain.ContratacaoProduto;
-import br.com.bho.formalizacaodigital.domain.Produto;
+import br.com.bho.formalizacaodigital.dto.ClienteDTO;
+import br.com.bho.formalizacaodigital.dto.ContratacaoProdutoDTO;
+import br.com.bho.formalizacaodigital.dto.SimulacaoProduto;
+
+import java.util.List;
 
 public interface ContratacaoProdutoService {
 
-    ContratacaoProduto simularContratacao(Cliente cliente, Produto produto);
+    List<SimulacaoProduto> simularContratacao(ClienteDTO cliente);
 
-    ContratacaoProduto formalizarContratacao(Cliente cliente, Produto produto);
+    ContratacaoProdutoDTO formalizarContratacao(ClienteDTO cliente, Long idProduto);
 }

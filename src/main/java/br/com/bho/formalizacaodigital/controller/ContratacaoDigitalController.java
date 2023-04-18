@@ -1,14 +1,15 @@
 package br.com.bho.formalizacaodigital.controller;
 
-import br.com.bho.formalizacaodigital.domain.Cliente;
-import br.com.bho.formalizacaodigital.domain.ContratacaoProduto;
-import br.com.bho.formalizacaodigital.domain.Produto;
+import br.com.bho.formalizacaodigital.dto.ClienteDTO;
+import br.com.bho.formalizacaodigital.dto.ContratacaoProdutoDTO;
+import br.com.bho.formalizacaodigital.dto.SimulacaoProduto;
 import br.com.bho.formalizacaodigital.service.ContratacaoProdutoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("contratacao")
@@ -18,12 +19,12 @@ public class ContratacaoDigitalController {
     ContratacaoProdutoService contratacaoProdutoService;
 
     @PostMapping("simulacao")
-    public ResponseEntity<ContratacaoProduto> simularContratacao(Cliente cliente, Produto produto){
-        return ResponseEntity.ok().body(contratacaoProdutoService.simularContratacao(cliente, produto));
+    public ResponseEntity<List<SimulacaoProduto>> simularContratacao(@RequestBody @Valid ClienteDTO clienteDTO) {
+        return ResponseEntity.ok().body(contratacaoProdutoService.simularContratacao(clienteDTO));
     }
 
-    @PostMapping("formalizacaq")
-    public ResponseEntity<ContratacaoProduto> formalizarContratacao(Cliente cliente, Produto produto){
-        return ResponseEntity.ok().body(contratacaoProdutoService.formalizarContratacao(cliente, produto));
+    @PostMapping("formalizacao")
+    public ResponseEntity<ContratacaoProdutoDTO> formalizarContratacao(@RequestBody @Valid ClienteDTO clienteDTO, @RequestParam Long idProduto) {
+        return ResponseEntity.ok().body(contratacaoProdutoService.formalizarContratacao(clienteDTO, idProduto));
     }
 }

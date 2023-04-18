@@ -2,7 +2,8 @@ package br.com.bho.formalizacaodigital.service.implemention;
 
 import br.com.bho.formalizacaodigital.domain.Cliente;
 import br.com.bho.formalizacaodigital.dto.ClienteDTO;
-import br.com.bho.formalizacaodigital.exception.ErroGeral;
+import br.com.bho.formalizacaodigital.exception.ErroGeral403;
+import br.com.bho.formalizacaodigital.exception.ErroGeral404;
 import br.com.bho.formalizacaodigital.repository.ClienteRepository;
 import br.com.bho.formalizacaodigital.service.ClienteService;
 import lombok.AllArgsConstructor;
@@ -16,33 +17,17 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ClienteServiceImpl implements ClienteService {
 
-    ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
     @Override
     public List<ClienteDTO> listar() {
-        return clienteRepository.findAll().stream()
-                .map(cliente -> new ClienteDTO(
-                        cliente.getId(),
-                        cliente.getNome(),
-                        cliente.getCpfCnpj(),
-                        cliente.getSexo(),
-                        cliente.getIdade(),
-                        cliente.getProfissao(),
-                        cliente.getSalario()))
-                .collect(Collectors.toList());
+        return clienteRepository.findAll().stream().map(ClienteDTO::new).collect(Collectors.toList());
     }
 
     @Override
     public ClienteDTO buscar(Long idCliente) {
-        return clienteRepository.findById(idCliente)
-                .map(cliente -> new ClienteDTO(
-                        cliente.getId(),
-                        cliente.getNome(),
-                        cliente.getCpfCnpj(),
-                        cliente.getSexo(),
-                        cliente.getIdade(),
-                        cliente.getProfissao(),
-                        cliente.getSalario())).orElseThrow(() -> new ErroGeral("Cliente não encontrado. Favor Verificar"));
+        return clienteRepository.findById(idCliente).map(ClienteDTO::new)
+                .orElseThrow(() -> new ErroGeral404("Cliente não encontrado. Favor Verificar"));
     }
 
     @Override
@@ -58,14 +43,14 @@ public class ClienteServiceImpl implements ClienteService {
             clienteCadastro.setSalario(clienteDTO.getSalario());
             clienteRepository.save(clienteCadastro);
         } else {
-            throw new ErroGeral("Cliente: " + clienteDTO.getNome() + " já cadastrado com o número de CPF/CNPJ: " + clienteDTO.getCpfCnpj());
+            throw new ErroGeral403("Cliente: " + clienteDTO.getNome() + " já cadastrado com o número de CPF/CNPJ: " + clienteDTO.getCpfCnpj());
         }
     }
 
     @Override
     public void editar(ClienteDTO clienteDTO) {
-        Cliente clienteEdicao = clienteRepository.findById(clienteDTO.getId())
-                .orElseThrow(() -> new ErroGeral("Cliente não encontrado. Favor Verificar"));
+        Cliente clienteEdicao = clienteRepository.findById(clienteDTO.getIdCliente())
+                .orElseThrow(() -> new ErroGeral404("Cliente não encontrado. Favor Verificar"));
         clienteEdicao.setNome(clienteDTO.getNome());
         clienteEdicao.setCpfCnpj(clienteDTO.getCpfCnpj());
         clienteEdicao.setSexo(clienteDTO.getSexo());
@@ -81,7 +66,7 @@ public class ClienteServiceImpl implements ClienteService {
         if (existeCliente) {
             clienteRepository.deleteById(idCliente);
         } else {
-            throw new ErroGeral("Cliente não encontrado. Favor Verificar");
+            throw new ErroGeral404("Cliente não encontrado. Favor Verificar");
         }
     }
 }

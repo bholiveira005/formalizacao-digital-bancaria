@@ -1,6 +1,6 @@
 package br.com.bho.formalizacaodigital.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import br.com.bho.formalizacaodigital.domain.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -18,10 +18,7 @@ import java.time.LocalDate;
 public class ProdutoDTO implements Serializable {
 
     @NotNull
-    private Long id;
-
-    @NotNull
-    private Long numeroProduto;
+    private Long idCliente;
 
     @NotBlank
     private String tipo;
@@ -29,7 +26,12 @@ public class ProdutoDTO implements Serializable {
     @NotBlank
     private String nome;
 
-    @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dataValidade;
+    private BigDecimal valorLimite;
+
+    public ProdutoDTO(Produto produto) {
+        this.idCliente = produto.getId();
+        this.tipo = produto.getTipo();
+        this.nome = produto.getNome();
+        this.valorLimite = produto.getValorLimite();
+    }
 }

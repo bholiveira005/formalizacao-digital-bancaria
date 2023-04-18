@@ -20,22 +20,24 @@ public class ContratacaoProduto {
     @Column(name = "id", nullable = false)
     private Long idContratacao;
 
-    @Column(name = "idCliente", nullable = false)
-    private Long idCliente;
+    @OneToOne
+    @JoinColumn(name="cliente_id", nullable = false)
+    private Cliente cliente;
 
-    @Column(name = "idProduto", nullable = false)
-    private Long idProduto;
+    @OneToOne
+    @JoinColumn(name="produto_id", nullable = false)
+    private Produto produto;
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "numero_contratacao", nullable = false)
-    private Long numeroContratacao;
+    private String numeroContratacaoProduto;
 
-    @Column(name = "data_contratacao", nullable = false)
-    private LocalDate dataContratacao;
-
-    @Column(name = "data_atualizacao")
-    private LocalDate dataAtualizacao;
+    @Column(name = "data_validade", nullable = false)
+    private LocalDate dataValidade;
 
     @Column(name = "contratacao_ativa", nullable = false)
     private Boolean contratacaoAtiva;
+
+    @Column(name = "data_contratacao", nullable = false)
+    private LocalDate dataContratacao;
 }
