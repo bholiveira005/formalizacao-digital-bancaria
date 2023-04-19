@@ -3,6 +3,7 @@ package br.com.bho.formalizacaodigital.controller;
 import br.com.bho.formalizacaodigital.dto.ProdutoDTO;
 import br.com.bho.formalizacaodigital.service.ProdutoService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +28,13 @@ public class ProdutoController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ProdutoDTO> cadastrar(@RequestBody @Valid ProdutoDTO ProdutoDTO){
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid ProdutoDTO ProdutoDTO){
         produtoService.salvar(ProdutoDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("")
-    public ResponseEntity<ProdutoDTO> editar(@RequestBody @Valid ProdutoDTO ProdutoDTO){
+    public ResponseEntity<?> editar(@RequestBody @Valid ProdutoDTO ProdutoDTO){
         produtoService.editar(ProdutoDTO);
         return ResponseEntity.noContent().build();
     }

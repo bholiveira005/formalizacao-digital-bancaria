@@ -1,20 +1,22 @@
 # ** Simulação de Formalizacao Digital Bancária **
-Exemplo de aquisição de produtos bancários.
+* Exemplo de aquisição de produtos bancários.
 
 # Login: 
-Autenticar com os seguintes usuários e senhas no Postman, SOAPUI ou outro client de testes:
+* Autenticar com os seguintes usuários e senhas no Postman, SOAPUI ou outro client de testes:
 
 # Tipo de autenticação: 
--> Basic Autenticathion
+* Basic Autenticathion
 
-Usuário: user 
-Senha: user
+-> Usuário: user ; Senha: user
 
 ou
 
-Usuário: admin
-Senha: admin
+Usuário: admin ; Senha: admin
 
-# Testar as chamadas dos endpoints que estão na Controller
+# -> Testar as chamadas dos endpoints que estão na Controller
 
-Author: Bruno Henrique de Oliveira
+# Banco de dados utilizado
+* Banco de dados SQL Server versão 2022
+
+# Autor: 
+* Bruno Henrique de Oliveira

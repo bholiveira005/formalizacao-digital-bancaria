@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ClienteDTO implements Serializable {
 
-    @NotNull
     private Long idCliente;
 
     @NotNull

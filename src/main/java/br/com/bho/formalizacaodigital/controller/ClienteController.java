@@ -3,6 +3,7 @@ package br.com.bho.formalizacaodigital.controller;
 import br.com.bho.formalizacaodigital.dto.ClienteDTO;
 import br.com.bho.formalizacaodigital.service.ClienteService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +28,13 @@ public class ClienteController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ClienteDTO> cadastrar(@RequestBody @Valid ClienteDTO clienteDTO){
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid ClienteDTO clienteDTO){
         clienteService.salvar(clienteDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("")
-    public ResponseEntity<ClienteDTO> editar(@RequestBody ClienteDTO clienteDTO){
+    public ResponseEntity<?> editar(@RequestBody @Valid ClienteDTO clienteDTO){
         clienteService.editar(clienteDTO);
         return ResponseEntity.noContent().build();
     }

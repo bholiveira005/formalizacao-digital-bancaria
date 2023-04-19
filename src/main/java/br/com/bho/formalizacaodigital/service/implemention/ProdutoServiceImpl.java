@@ -36,6 +36,7 @@ public class ProdutoServiceImpl implements ProdutoService {
             Produto produtoCadastro = new Produto();
             produtoCadastro.setTipo(produtoDTO.getTipo());
             produtoCadastro.setNome(produtoDTO.getNome());
+            produtoCadastro.setValorLimite(produtoDTO.getValorLimite());
             produtoRepository.save(produtoCadastro);
         } else {
             throw new ErroGeral404("Produto: " + produto.getNome() + " já está cadastrado");
@@ -44,10 +45,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public void editar(ProdutoDTO produtoDTO) {
-        Produto produtoEdicao = produtoRepository.findById(produtoDTO.getIdCliente())
+        Produto produtoEdicao = produtoRepository.findById(produtoDTO.getIdProduto())
                 .orElseThrow(() -> new ErroGeral404("Produto não encontrado. Favor Verificar"));
         produtoEdicao.setTipo(produtoDTO.getTipo());
         produtoEdicao.setNome(produtoDTO.getNome());
+        produtoEdicao.setValorLimite(produtoDTO.getValorLimite());
         produtoRepository.save(produtoEdicao);
     }
 

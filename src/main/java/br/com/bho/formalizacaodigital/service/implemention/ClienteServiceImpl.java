@@ -43,7 +43,7 @@ public class ClienteServiceImpl implements ClienteService {
             clienteCadastro.setSalario(clienteDTO.getSalario());
             clienteRepository.save(clienteCadastro);
         } else {
-            throw new ErroGeral403("Cliente: " + clienteDTO.getNome() + " já cadastrado com o número de CPF/CNPJ: " + clienteDTO.getCpfCnpj());
+            throw new ErroGeral403("O cliente " + clienteDTO.getNome() + " já cadastrado com o número de CPF/CNPJ: " + clienteDTO.getCpfCnpj());
         }
     }
 
