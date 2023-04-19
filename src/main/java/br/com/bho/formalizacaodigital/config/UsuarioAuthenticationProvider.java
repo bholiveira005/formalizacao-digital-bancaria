@@ -35,7 +35,7 @@ public class UsuarioAuthenticationProvider implements AuthenticationProvider {
                 .orElseThrow(() -> new BadCredentialsException("Sem detalhes de usuário"));
 
         if (encoder.matches(password, usuario.getPassword())) {
-            log.info("Usuário autenticado com sucesso");
+            log.info("Usuário autenticado com sucesso: " + username);
             return new UsernamePasswordAuthenticationToken(username, password, buscarRoles(usuario.getRole()));
         } else {
             throw new BadCredentialsException("Senha incorreta");
