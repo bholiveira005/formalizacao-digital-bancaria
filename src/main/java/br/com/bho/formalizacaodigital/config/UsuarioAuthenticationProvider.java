@@ -31,7 +31,7 @@ public class UsuarioAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        Usuario usuario = repository.findByUserName(username)
+        Usuario usuario = repository.findByUserNameIgnoreCase(username)
                 .orElseThrow(() -> new BadCredentialsException("Sem detalhes de usuário"));
 
         if (encoder.matches(password, usuario.getPassword())) {

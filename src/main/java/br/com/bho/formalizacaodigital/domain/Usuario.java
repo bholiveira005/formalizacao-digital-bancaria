@@ -31,7 +31,7 @@ public class Usuario {
 
     public Usuario(UsuarioDTO usuarioDTO) {
         this.id = usuarioDTO.getId();
-        this.userName = usuarioDTO.getUserName();
+        this.userName = usuarioDTO.getUserName().toLowerCase();
         this.password = usuarioDTO.getPassword();
         this.role = usuarioDTO.getRole();
     }

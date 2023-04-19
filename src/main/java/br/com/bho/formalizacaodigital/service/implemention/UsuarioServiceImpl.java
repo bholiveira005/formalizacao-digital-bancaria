@@ -2,6 +2,7 @@ package br.com.bho.formalizacaodigital.service.implemention;
 
 import br.com.bho.formalizacaodigital.domain.Usuario;
 import br.com.bho.formalizacaodigital.dto.UsuarioDTO;
+import br.com.bho.formalizacaodigital.exception.ErroGeral403;
 import br.com.bho.formalizacaodigital.exception.ErroGeral404;
 import br.com.bho.formalizacaodigital.repository.UsuarioRepository;
 import br.com.bho.formalizacaodigital.service.UsuarioService;
@@ -23,12 +24,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void cadastrar(UsuarioDTO usuarioDTO) {
-        Optional<Usuario> usuario = usuarioRepository.findByUserName(usuarioDTO.getUserName());
+        Optional<Usuario> usuario = usuarioRepository.findByUserNameIgnoreCase(usuarioDTO.getUserName());
         if (!usuario.isPresent()) {
             usuarioDTO.setPassword(encoder.encode(usuarioDTO.getPassword()));
             usuarioRepository.save(new Usuario(usuarioDTO));
         } else {
-            throw new ErroGeral404("Usuário já cadastrado.");
+            throw new ErroGeral403("Usuário já cadastrado.");
         }
     }
 
@@ -43,13 +44,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO buscarDetalheUsuario(String userName) {
-        return usuarioRepository.findByUserName(userName).map(UsuarioDTO::new)
+        return usuarioRepository.findByUserNameIgnoreCase(userName).map(UsuarioDTO::new)
                 .orElseThrow(() -> new ErroGeral404("Usuário não encontrado. Favor verificar"));
     }
 
     @Override
     public String buscarRole(String userName) {
-        return usuarioRepository.findByUserName(userName).map(Usuario::getRole)
+        return usuarioRepository.findByUserNameIgnoreCase(userName).map(Usuario::getRole)
                 .orElseThrow(() -> new ErroGeral404("Role de permissão não encontrada. Favor verificar"));
     }
 }

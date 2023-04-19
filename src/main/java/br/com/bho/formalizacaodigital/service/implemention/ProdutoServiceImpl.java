@@ -2,6 +2,7 @@ package br.com.bho.formalizacaodigital.service.implemention;
 
 import br.com.bho.formalizacaodigital.domain.Produto;
 import br.com.bho.formalizacaodigital.dto.ProdutoDTO;
+import br.com.bho.formalizacaodigital.exception.ErroGeral403;
 import br.com.bho.formalizacaodigital.exception.ErroGeral404;
 import br.com.bho.formalizacaodigital.repository.ProdutoRepository;
 import br.com.bho.formalizacaodigital.service.ProdutoService;
@@ -39,7 +40,7 @@ public class ProdutoServiceImpl implements ProdutoService {
             produtoCadastro.setValorLimite(produtoDTO.getValorLimite());
             produtoRepository.save(produtoCadastro);
         } else {
-            throw new ErroGeral404("Produto: " + produto.getNome() + " já está cadastrado");
+            throw new ErroGeral403("Produto: " + produto.getNome() + " já está cadastrado");
         }
     }
 

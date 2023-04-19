@@ -4,7 +4,10 @@ import br.com.bho.formalizacaodigital.dto.UsuarioDTO;
 import br.com.bho.formalizacaodigital.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
@@ -14,26 +17,24 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping("cadastro")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrar(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid UsuarioDTO usuarioDTO) {
         usuarioService.cadastrar(usuarioDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("edicao")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void editar(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<?> editar(@RequestBody @Valid UsuarioDTO usuarioDTO) {
         usuarioService.editar(usuarioDTO);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("detalhe")
-    @ResponseStatus(HttpStatus.OK)
-    public UsuarioDTO buscarDetalheUsuario(@RequestParam String userName) {
-        return usuarioService.buscarDetalheUsuario(userName);
+    public ResponseEntity<UsuarioDTO> buscarDetalheUsuario(@RequestParam String userName) {
+        return ResponseEntity.ok().body(usuarioService.buscarDetalheUsuario(userName));
     }
 
     @GetMapping("role")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String buscarRole(@RequestParam String userName) {
-        return usuarioService.buscarRole(userName);
+    public ResponseEntity<String> buscarRole(@RequestParam String userName) {
+        return ResponseEntity.ok().body(usuarioService.buscarRole(userName));
     }
 }
