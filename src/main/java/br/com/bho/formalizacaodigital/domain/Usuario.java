@@ -1,6 +1,5 @@
 package br.com.bho.formalizacaodigital.domain;
 
-import br.com.bho.formalizacaodigital.dto.UsuarioDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,12 +27,5 @@ public class Usuario {
 
     @Column(name = "role", nullable = false)
     private String role;
-
-    public Usuario(UsuarioDTO usuarioDTO) {
-        this.id = usuarioDTO.getId();
-        this.userName = usuarioDTO.getUserName().toLowerCase();
-        this.password = usuarioDTO.getPassword();
-        this.role = usuarioDTO.getRole();
-    }
 }
 

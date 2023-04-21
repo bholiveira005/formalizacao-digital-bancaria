@@ -43,7 +43,7 @@ public class ClienteServiceImpl implements ClienteService {
             clienteCadastro.setSalario(clienteDTO.getSalario());
             clienteRepository.save(clienteCadastro);
         } else {
-            throw new ErroGeral403("O cliente " + clienteDTO.getNome() + " já cadastrado com o número de CPF/CNPJ: " + clienteDTO.getCpfCnpj());
+            throw new ErroGeral403("O cliente " + clienteDTO.getNome() + " já está cadastrado com o número de CPF/CNPJ: " + clienteDTO.getCpfCnpj());
         }
     }
 
@@ -52,7 +52,7 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente clienteEdicao = clienteRepository.findById(clienteDTO.getIdCliente())
                 .orElseThrow(() -> new ErroGeral404("Cliente não encontrado. Favor Verificar"));
         clienteEdicao.setNome(clienteDTO.getNome());
-        clienteEdicao.setCpfCnpj(clienteDTO.getCpfCnpj());
+        clienteEdicao.setCpfCnpj(clienteEdicao.getCpfCnpj());
         clienteEdicao.setSexo(clienteDTO.getSexo());
         clienteEdicao.setIdade(clienteDTO.getIdade());
         clienteEdicao.setProfissao(clienteDTO.getProfissao());

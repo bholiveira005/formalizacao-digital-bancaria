@@ -24,10 +24,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void cadastrar(UsuarioDTO usuarioDTO) {
-        Optional<Usuario> usuario = usuarioRepository.findByUserNameIgnoreCase(usuarioDTO.getUserName());
-        if (!usuario.isPresent()) {
-            usuarioDTO.setPassword(encoder.encode(usuarioDTO.getPassword()));
-            usuarioRepository.save(new Usuario(usuarioDTO));
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByUserNameIgnoreCase(usuarioDTO.getUserName());
+        if (!usuarioOptional.isPresent()) {
+            Usuario usuario = new Usuario();
+            usuario.setUserName(usuarioDTO.getUserName());
+            usuario.setPassword(encoder.encode(usuarioDTO.getPassword()));
+            usuario.setRole(usuarioDTO.getRole());
+            usuarioRepository.save(usuario);
         } else {
             throw new ErroGeral403("Usuário já cadastrado.");
         }
@@ -35,11 +38,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void editar(UsuarioDTO usuarioDTO) {
-        usuarioRepository.findById(usuarioDTO.getId()).map(usuario -> {
-            usuarioDTO.setPassword(encoder.encode(usuarioDTO.getPassword()));
-            usuarioRepository.save(new Usuario(usuarioDTO));
-            return usuarioDTO;
-        }).orElseThrow(() -> new ErroGeral404("Usuário não existe. Favor verificar."));
+        Usuario usuario = usuarioRepository.findById(usuarioDTO.getId())
+                .orElseThrow(() -> new ErroGeral404("Usuário não existe. Favor verificar."));
+        usuario.setUserName(usuario.getUserName());
+        usuario.setPassword(encoder.encode(usuarioDTO.getPassword()));
+        usuario.setRole(usuarioDTO.getRole());
+        usuarioRepository.save(usuario);
     }
 
     @Override
